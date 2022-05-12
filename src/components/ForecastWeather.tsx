@@ -30,6 +30,7 @@ const ForecastWeather = (props: CurrentWeatherProps) => {
 
             setDays(days);
         } catch (error) {
+            console.error(error);
         }
     }, [props.latitude, props.longitude]);
 

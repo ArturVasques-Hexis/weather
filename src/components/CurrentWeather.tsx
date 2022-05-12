@@ -15,7 +15,7 @@ const CurrentWeather = (props: CurrentWeatherProps) => {
     const fetchCurrentWeatherHandler = useCallback(async () => {
         try {
             const apiKey = process.env.REACT_APP_API_KEY;
-            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${props.latitude}&lon=${props.longitude}&appid=${apiKey}&lang=pt&units=metric`
+            const url = `https://api.openweathermap.org/data/2.5/weather?lat=${props.latitude}&lon=${props.longitude}&appid=${apiKey}&lang=pt&units=metric`;
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -23,6 +23,7 @@ const CurrentWeather = (props: CurrentWeatherProps) => {
             }
 
             const data = await response.json();
+            
             setCurrentWeather(data);
         } catch (error) {
             console.error(error);

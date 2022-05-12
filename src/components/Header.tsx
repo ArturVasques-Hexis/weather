@@ -31,6 +31,7 @@ const Header = () => {
 
     const submitHandler = (event: React.SyntheticEvent<HTMLFormElement>) => {
         event.preventDefault();
+        
         if (city.trim() === '') {
             return;
         }
