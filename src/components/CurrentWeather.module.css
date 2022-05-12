@@ -1,0 +1,23 @@
+.card {
+    text-align: center;
+    color: white;
+}
+
+.description {
+    text-transform: capitalize;
+    font-size: 25px;
+}
+
+.icon {
+
+}
+
+.card h1 {
+    font-size: 70px;
+    font-weight: 200;
+}
+
+.card .temp {
+    font-size: 55px;
+    font-weight: 600;
+}
