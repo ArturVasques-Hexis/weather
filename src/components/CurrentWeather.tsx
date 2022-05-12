@@ -23,16 +23,16 @@ const CurrentWeather = (props: CurrentWeatherProps) => {
             }
 
             const data = await response.json();
-
             setCurrentWeather(data);
         } catch (error) {
+            console.error(error);
         }
     }, [props.latitude, props.longitude]);
 
 
     useEffect(() => {
         fetchCurrentWeatherHandler();
-    }, [fetchCurrentWeatherHandler, props.latitude, props.longitude])
+    }, [fetchCurrentWeatherHandler])
 
     return (
         <div className={classes.card}>

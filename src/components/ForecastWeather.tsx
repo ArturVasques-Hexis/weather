@@ -3,13 +3,13 @@ import { IUpcomingDay } from '../interfaces/weather.interface';
 
 import classes from './ForecastWeather.module.css';
 
-interface ForecastWeatherProps {
+interface CurrentWeatherProps {
     latitude: number;
     longitude: number;
     children?: React.ReactNode;
 }
 
-const ForecastWeather = (props: ForecastWeatherProps) => {
+const ForecastWeather = (props: CurrentWeatherProps) => {
     const [days, setDays] = useState<Array<IUpcomingDay> | null>(null);
 
     const fetchForecastWeatherHandler = useCallback(async () => {

@@ -1,16 +1,20 @@
-import classes from './Header.module.css';
 
-import searchIcon from '../assets/search.png';
 import { useState } from 'react';
+import { useDispatch } from 'react-redux';
+import { geolocationActions } from '../store/geolocation-slice';
+
+import classes from './Header.module.css';
+import searchIcon from '../assets/search.png';
 
 const Header = () => {
+    const dispatch = useDispatch();
     const [city, setCity] = useState('');
 
-    const fetchWeatherByCity = async (cityName: string) => {
+
+    const fetchCityGeolocation = async (cityName: string) => {
         try {
             const apiKey = process.env.REACT_APP_API_KEY;
-
-            const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}`;
+            const url = `https://api.openweathermap.org/data/2.5/weather?q=${cityName}&appid=${apiKey}&lang=pt&units=metric`;
             const response = await fetch(url);
 
             if (!response.ok) {
@@ -19,7 +23,9 @@ const Header = () => {
 
             const data = await response.json();
 
+            dispatch(geolocationActions.updateGeolocation({ latitude: data.coord.lat, longitude: data.coord.lon }));
         } catch (error) {
+            console.error(error);
         }
     };
 
@@ -29,7 +35,7 @@ const Header = () => {
             return;
         }
 
-        fetchWeatherByCity(city);
+        fetchCityGeolocation(city);
         setCity('');
     }
 

@@ -1,13 +1,18 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { geolocationActions } from './store/geolocation-slice';
+
 import CurrentWeather from './components/CurrentWeather';
 import ForecastWeather from './components/ForecastWeather';
 import Header from './components/Header';
 
 import classes from './App.module.css';
+import { RootState } from './store';
 
 function App() {
-  const [latitude, setLatitude] = useState<number>(39.74362);
-  const [longitude, setLongitude] = useState<number>(-8.80705);
+  const dispatch = useDispatch();
+  const latitude = useSelector((state: RootState) => state.geolocation.latitude);
+  const longitude = useSelector((state: RootState) => state.geolocation.longitude);
 
   const getGeolocation = useCallback(async () => {
     if (!navigator.geolocation) {
@@ -17,13 +22,12 @@ function App() {
       navigator.geolocation.getCurrentPosition((position) => {
         const {latitude, longitude} = position.coords;
 
-        setLatitude(latitude);
-        setLongitude(longitude);
+        dispatch(geolocationActions.updateGeolocation({latitude, longitude}));
       }, () => {
         console.log('Unable to retrieve your location');
       });
     }
-  }, []);
+  }, [dispatch]);
 
   useEffect(() => {
     getGeolocation();
@@ -36,10 +40,10 @@ function App() {
         <Header />
       </div>
       <div className={classes.currentWeather}>
-        <CurrentWeather latitude={latitude} longitude={longitude} />
+        <CurrentWeather latitude={latitude} longitude={longitude}/>
       </div>
       <div className={classes.forecastWeather}>
-        <ForecastWeather  latitude={latitude} longitude={longitude} />
+        <ForecastWeather latitude={latitude} longitude={longitude}/>
       </div>
     </div>
   );
